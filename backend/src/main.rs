@@ -1,5 +1,5 @@
-
 mod app;
+mod config;
 mod core;
 mod modules;
 mod state;
@@ -13,16 +13,17 @@ use tracing_subscriber::EnvFilter;
 async fn main() -> Result<()> {
     tracing_subscriber::fmt()
         .with_env_filter(
-            EnvFilter::try_from_default_env()
-                .unwrap_or_else(|_| EnvFilter::new("info"))
+            EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info")),
         )
         .init();
 
+    let config = config::Config::from_env()?;
     let state = state::AppState::new();
     let app = app::create_app(state);
-    let listener = TcpListener::bind("127.0.0.1:8080").await?;
+    let listener = TcpListener::bind(config.addr).await?;
+    let addr = listener.local_addr()?;
 
-    info!("Pocket Server running on http://127.0.0.1:8080");
+    info!("Pocket Server running on http://{addr}");
 
     axum::serve(listener, app).await?;
 
