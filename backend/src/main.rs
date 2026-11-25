@@ -18,7 +18,7 @@ async fn main() -> Result<()> {
         .init();
 
     let config = config::Config::from_env()?;
-    let state = state::AppState::new();
+    let state = state::AppState::new(config.root);
     let app = app::create_app(state);
     let listener = TcpListener::bind(config.addr).await?;
     let addr = listener.local_addr()?;

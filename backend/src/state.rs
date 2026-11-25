@@ -1,15 +1,21 @@
+use std::{
+    path::{Path, PathBuf},
+    sync::Arc,
+};
 
 #[derive(Clone)]
-pub struct AppState {}
-
-impl AppState {
-    pub fn new() -> Self {
-        Self {}
-    }
+pub struct AppState {
+    root: Arc<PathBuf>,
 }
 
-impl Default for AppState {
-    fn default() -> Self {
-        Self::new()
+impl AppState {
+    pub fn new(root: PathBuf) -> Self {
+        Self {
+            root: Arc::new(root),
+        }
+    }
+
+    pub fn root(&self) -> &Path {
+        &self.root
     }
 }

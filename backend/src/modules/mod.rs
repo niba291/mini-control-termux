@@ -7,6 +7,7 @@ use axum::{
 
 use serde::Serialize;
 
+pub mod files;
 pub mod health;
 
 use crate::{
@@ -28,5 +29,6 @@ async fn list_modules() -> Json<ModulesResponse> {
 pub fn router() -> Router<AppState> {
     Router::new()
         .nest("/health", health::routes::router())
+        .nest("/files", files::routes::router())
         .route("/modules", get(list_modules))
 }
