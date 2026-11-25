@@ -19,7 +19,7 @@ async fn main() -> Result<()> {
         .init();
 
     let state = state::AppState::new();
-    let app = app::create_app((*state).clone());
+    let app = app::create_app(state);
     let listener = TcpListener::bind("127.0.0.1:8080").await?;
 
     info!("Pocket Server running on http://127.0.0.1:8080");

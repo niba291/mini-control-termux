@@ -25,6 +25,8 @@ async fn list_modules() -> Json<ModulesResponse> {
     })
 }
 
-pub fn router() -> Router {
-    Router::new().nest("/health", health::routes::router()).route("/modules", get(list_modules))
+pub fn router() -> Router<AppState> {
+    Router::new()
+        .nest("/health", health::routes::router())
+        .route("/modules", get(list_modules))
 }
