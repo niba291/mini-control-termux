@@ -27,9 +27,7 @@ impl Config {
 
         let root = match env::var_os("POCKET_ROOT") {
             Some(value) => PathBuf::from(value),
-            None => env::var_os("HOME")
-                .map(PathBuf::from)
-                .unwrap_or_else(|| PathBuf::from(".")),
+            None => env::var_os("HOME").map(PathBuf::from).unwrap_or_else(|| PathBuf::from(".")),
         };
         let root = std::fs::canonicalize(&root)
             .with_context(|| format!("invalid POCKET_ROOT: {}", root.display()))?;
