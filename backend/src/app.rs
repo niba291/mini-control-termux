@@ -23,7 +23,14 @@ async fn root() -> Json<ServerInfo> {
     Json(ServerInfo {
         name: "Pocket Server",
         version: env!("CARGO_PKG_VERSION"),
-        endpoints: vec!["/", "/api/health", "/api/modules", "/api/files"],
+        endpoints: vec![
+            "/",
+            "/api/health",
+            "/api/modules",
+            "/api/files",
+            "/api/files/content?path=...",
+            "PUT /api/files/content?path=...",
+        ],
     })
 }
 

@@ -12,6 +12,7 @@ pub enum AppError {
     #[allow(dead_code)]
     BadRequest(String),
     Forbidden(String),
+    Conflict(String),
     MethodNotAllowed(String),
     #[allow(dead_code)]
     Internal(String),
@@ -29,6 +30,7 @@ impl AppError {
             AppError::NotFound(message) => (StatusCode::NOT_FOUND, "not_found", message),
             AppError::BadRequest(message) => (StatusCode::BAD_REQUEST, "bad_request", message),
             AppError::Forbidden(message) => (StatusCode::FORBIDDEN, "forbidden", message),
+            AppError::Conflict(message) => (StatusCode::CONFLICT, "conflict", message),
             AppError::MethodNotAllowed(message) => (StatusCode::METHOD_NOT_ALLOWED, "method_not_allowed", message),
             AppError::Internal(detail) => {
                 error!("internal error: {detail}");
@@ -55,6 +57,7 @@ impl std::fmt::Display for AppError {
             AppError::NotFound(message)
             | AppError::BadRequest(message)
             | AppError::Forbidden(message)
+            | AppError::Conflict(message)
             | AppError::MethodNotAllowed(message)
             | AppError::Internal(message) => f.write_str(message),
         }
